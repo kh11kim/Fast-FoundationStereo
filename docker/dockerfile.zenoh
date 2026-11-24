@@ -1,0 +1,2 @@
+FROM ffs:latest
+RUN ["/opt/conda/envs/my/bin/uv", "pip", "install", "--python", "/opt/conda/envs/my/bin/python", "eclipse-zenoh==1.10.2"]

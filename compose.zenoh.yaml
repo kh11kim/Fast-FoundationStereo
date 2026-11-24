@@ -1,0 +1,21 @@
+# FFS zenoh server (zenoh_server.py). Up: docker compose -f compose.zenoh.yaml up -d
+services:
+  ffs-zenoh:
+    build:
+      context: docker  # small context; the repo itself is mounted below
+      dockerfile: dockerfile.zenoh
+    image: ffs-zenoh:local
+    container_name: ffs-zenoh
+    restart: unless-stopped
+    network_mode: host  # zenoh listens on tcp/0.0.0.0:7452
+    working_dir: /workspace
+    command: ["/opt/conda/envs/my/bin/python", "zenoh_server.py"]
+    volumes:
+      - .:/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
